@@ -1,3 +1,5 @@
+
+
 let scene, camera, cloudParticles = [];
 
 const init = () => {
@@ -34,7 +36,7 @@ const init = () => {
     document.body.appendChild(renderer.domElement);
 
     let loader = new THREE.TextureLoader();
-    loader.load('smoke.png', texture =>{
+    loader.load('./assets/smoke.png', texture =>{
         cloudGeo = new THREE.PlaneBufferGeometry(600, 600);
         cloudMaterial = new THREE.MeshLambertMaterial({
             map: texture,
@@ -57,7 +59,30 @@ const init = () => {
         }
     });
     window.addEventListener('resize', onWindowResize, false);
+    setupWebAudio();
     render();
+};
+
+const setupWebAudio = () => {
+    let analyser;
+
+    let audio = document.createElement('audio');
+
+    audio.src = '/assets/holding_hands.mp3';
+
+    // comment in to have mp3 player apear
+    // audio.controls = 'true';  
+    document.body.appendChild(audio);
+
+    let audioContext = new AudioContext();
+
+    analyser = audioContext.createAnalyser();
+
+    let source = audioContext.createMediaElementSource(audio);
+    source.connect(audioContext.destination);
+
+    // comment out so it doesn't always play
+    audio.play();
 };
 
 const onWindowResize = () =>{
