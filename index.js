@@ -1,5 +1,3 @@
-
-
 let scene, camera, cloudParticles = [];
 
 const init = () => {
